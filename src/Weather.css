@@ -1,0 +1,20 @@
+form {
+    text-align: center;
+  }
+  
+  .city {
+    font-size: 35px;
+    font-weight: bold;
+  }
+  .results {
+    margin-top: 5%;
+    text-align: center;
+    list-style-type: none;
+  }
+
+  .dailyForecast{
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
