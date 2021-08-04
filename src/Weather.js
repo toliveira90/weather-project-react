@@ -46,24 +46,31 @@ export default function SearchEngine() {
         </form>
     </div>
   );
+  let dailyForecast =(<div>
+    <div className="dayNames"><Dates /></div>
+    <div className="dailyForecast ms-5 ps-3"><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span><span className=""><WeatherIcons icon="CLEAR_DAY" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span> </div>
+    <div className="dailyTemperatures"><Temperatures /></div>
+    </div>);
   if (temperature) {
     return (
       <div>
         {form}
         <ul className="results">
-          <li className="city"> {city} </li>
+          <li className="city"> {city} <br /> <span> <img src={icon} alt={description}/> </span><span className="temperature">{Math.round(temperature)}ºC </span> </li>
           <li>Last Updated : {dateFormat()}</li>
           <li>Description: {description}</li>
           <li></li>
-          <li> <span> <img src={icon} alt={description}/> </span> {Math.round(temperature)}ºC <span>Humidity: {humidity}%</span> <span>Speed: {speed}km/h</span></li>
+          <li>  <span>Humidity: {humidity}%</span> <span>Speed: {speed}km/h</span></li>
         </ul>
-        <div className="dayNames"><Dates /></div>
-        <div className="dailyForecast ms-5 ps-3"><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span><span className=""><WeatherIcons icon="CLEAR_DAY" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span> </div>
-        <div className="dailyTemperatures"><Temperatures /></div>
+        {dailyForecast}
       </div>
     );
   } else {
-    return form;
+    return <div> <div className="mb-5">{form} <ul className="results">
+    <li className="city"> Paris <br /><span> 25ºC</span></li>
+    <li></li>
+    <li> <span>Humidity: 85%</span> <span>Speed: 1.65km/h</span></li>
+  </ul></div>{dailyForecast}</div>;
   }
 }
 
