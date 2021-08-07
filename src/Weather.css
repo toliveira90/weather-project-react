@@ -1,6 +1,15 @@
 form {
     text-align: center;
   }
+img{
+  padding-bottom: 5.5%;
+  height: 150px;
+  width: 130px;
+}
+  .Weather{
+    margin: 30px auto;
+    max-width: 800px;
+  }
   
   .city {
     font-size: 45px;
@@ -11,10 +20,22 @@ form {
     text-align: center;
     list-style-type: none;
   }
+
   .temperature{
     font-weight: bold;
-    font-size: 40px;
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 64px;
     opacity: 0.7;
+  }
+
+  .unit{
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    top:-25px;
+    margin-left: 5px;
+
   }
 
   .dailyForecast{

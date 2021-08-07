@@ -4,6 +4,8 @@ import dateFormat from "dateformat";
 import WeatherIcons from "./WeatherIcons";
 import Dates from "./Dates";
 import Temperatures from "./Temperatures";
+import WeatherForecast from "./WeatherForecast";
+import 'bootstrap/dist/css/bootstrap.css';
 import "./Weather.css"
 
 
@@ -53,16 +55,17 @@ export default function SearchEngine() {
     </div>);
   if (temperature) {
     return (
-      <div>
+      <div className="Weather">
         {form}
         <ul className="results">
-          <li className="city"> {city} <br /> <span> <img src={icon} alt={description}/> </span><span className="temperature">{Math.round(temperature)}ºC </span> </li>
+          <li className="city"> {city} <br /> <span> <img src={icon} alt={description}/> </span><span className="temperature">{Math.round(temperature)}</span><span className="unit">ºC </span> </li>
           <li>Last Updated : {dateFormat()}</li>
           <li>Description: {description}</li>
           <li></li>
           <li>  <span>Humidity: {humidity}%</span> <span>Speed: {speed}km/h</span></li>
         </ul>
         {dailyForecast}
+        <WeatherForecast />
       </div>
     );
   } else {
