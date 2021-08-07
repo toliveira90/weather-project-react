@@ -11,10 +11,7 @@ import "./Weather.css"
 
 export default function SearchEngine() {
   let [city, setCity] = useState("");
-  let [temperature, setTemperature] = useState("");
-  let [description, setDescription] = useState("");
-  let [humidity, setHumidity] = useState("");
-  let [speed, setSpeed] = useState("");
+  let [WeatherData, setWeatherData] = useState({ready: false});
   let [icon, setIcon] = useState("");
   
   function handleSubmit(event){
@@ -27,10 +24,12 @@ export default function SearchEngine() {
   }
   function showTemperature(response) 
   {
-    setTemperature(response.data.main.temp);
-    setDescription(response.data.weather[0].description);
-    setHumidity(response.data.main.humidity);
-    setSpeed(response.data.wind.speed);
+    setWeatherData({
+      ready:true,
+      temperature: response.data.main.temp,
+      description: response.data.weather[0].description,
+      humidity:response.data.main.humidity,
+      speed:response.data.wind.speed});
     setIcon(
       `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     );
@@ -53,16 +52,16 @@ export default function SearchEngine() {
     <div className="dailyForecast ms-5 ps-3"><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span><span className=""><WeatherIcons icon="CLEAR_DAY" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span> </div>
     <div className="dailyTemperatures"><Temperatures /></div>
     </div>);
-  if (temperature) {
+  if (WeatherData.ready) {
     return (
       <div className="Weather">
         {form}
         <ul className="results">
-          <li className="city"> {city} <br /> <span> <img src={icon} alt={description}/> </span><span className="temperature">{Math.round(temperature)}</span><span className="unit">ºC </span> </li>
+          <li className="city"> {city} <br /> <span> <img src={icon} alt={WeatherData.description}/> </span><span className="temperature">{Math.round(WeatherData.temperature)}</span><span className="unit">ºC </span> </li>
           <li>Last Updated : {dateFormat()}</li>
-          <li>Description: {description}</li>
+          <li className="text-capitalize">Description: {WeatherData.description}</li>
           <li></li>
-          <li>  <span>Humidity: {humidity}%</span> <span>Speed: {speed}km/h</span></li>
+          <li>  <span>Humidity: {WeatherData.humidity}%</span> <span>Speed: {WeatherData.speed}km/h</span></li>
         </ul>
         {dailyForecast}
         <WeatherForecast />
