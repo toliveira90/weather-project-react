@@ -15,6 +15,11 @@ img{
     font-size: 45px;
     font-weight: bold;
   }
+  .dateFormat{
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 0.6;
+  }
   .results {
     margin-top: 5%;
     text-align: center;

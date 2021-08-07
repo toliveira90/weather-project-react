@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import dateFormat from "dateformat";
 import WeatherIcons from "./WeatherIcons";
 import Dates from "./Dates";
 import Temperatures from "./Temperatures";
 import WeatherForecast from "./WeatherForecast";
+import FormatDate from "./FormatDate";
 import 'bootstrap/dist/css/bootstrap.css';
 import "./Weather.css"
 
@@ -27,16 +27,13 @@ export default function SearchEngine() {
     setWeatherData({
       ready:true,
       temperature: response.data.main.temp,
+      date:new Date (response.data.dt * 1000),
       description: response.data.weather[0].description,
       humidity:response.data.main.humidity,
       speed:response.data.wind.speed});
     setIcon(
       `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     );
-
-    let dateFormat = require("dateformat");
-    let now = new Date(response.data.dt *1000);
-    dateFormat(now);
     }
   let form = (
     <div className="container">
@@ -58,7 +55,7 @@ export default function SearchEngine() {
         {form}
         <ul className="results">
           <li className="city"> {city} <br /> <span> <img src={icon} alt={WeatherData.description}/> </span><span className="temperature">{Math.round(WeatherData.temperature)}</span><span className="unit">ºC </span> </li>
-          <li>Last Updated : {dateFormat()}</li>
+          <li className="dateFormat"><FormatDate date={WeatherData.date}/></li>
           <li className="text-capitalize">Description: {WeatherData.description}</li>
           <li></li>
           <li>  <span>Humidity: {WeatherData.humidity}%</span> <span>Speed: {WeatherData.speed}km/h</span></li>
