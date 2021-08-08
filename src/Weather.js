@@ -3,21 +3,23 @@ import axios from "axios";
 import WeatherIcons from "./WeatherIcons";
 import Dates from "./Dates";
 import Temperatures from "./Temperatures";
-import WeatherForecast from "./WeatherForecast";
 import FormatDate from "./FormatDate";
 import 'bootstrap/dist/css/bootstrap.css';
 import "./Weather.css"
 
-
 export default function SearchEngine() {
-  let [city, setCity] = useState("");
+  let [city, setCity] = useState("Barcelona");
   let [WeatherData, setWeatherData] = useState({ready: false});
-  let [icon, setIcon] = useState("");
   
-  function handleSubmit(event){
-    event.preventDefault();
+  function Search() {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7511873474dcd0a7a6ab23240ca6b9ec&units=metric`;
     axios.get(url).then(showTemperature);
+  }
+  function handleSubmit(event){
+    event.preventDefault()
+    Search();
+    
+    
   }
   function SearchCity(event) {
     setCity(event.target.value);
@@ -26,14 +28,14 @@ export default function SearchEngine() {
   {
     setWeatherData({
       ready:true,
+      city:response.data.name,
       temperature: response.data.main.temp,
-      date:new Date (response.data.dt * 1000),
+      date:(new Date(response.data.dt * 1000)),
       description: response.data.weather[0].description,
       humidity:response.data.main.humidity,
-      speed:response.data.wind.speed});
-    setIcon(
-      `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    );
+      speed:response.data.wind.speed,
+      icon:`https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`});
+    
     }
   let form = (
     <div className="container">
@@ -50,26 +52,25 @@ export default function SearchEngine() {
     <div className="dailyTemperatures"><Temperatures /></div>
     </div>);
   if (WeatherData.ready) {
-    return (
-      <div className="Weather">
-        {form}
-        <ul className="results">
-          <li className="city"> {city} <br /> <span> <img src={icon} alt={WeatherData.description}/> </span><span className="temperature">{Math.round(WeatherData.temperature)}</span><span className="unit">ºC </span> </li>
-          <li className="dateFormat"><FormatDate date={WeatherData.date}/></li>
-          <li className="text-capitalize">Description: {WeatherData.description}</li>
-          <li></li>
-          <li>  <span>Humidity: {WeatherData.humidity}%</span> <span>Speed: {WeatherData.speed}km/h</span></li>
-        </ul>
-        {dailyForecast}
-        <WeatherForecast />
+    return (<div>
+      {form}
+      <div className="WeatherForecast">
+        <div className="Weather">
+    <ul className="results">
+      <li className="city"> {WeatherData.city} <br /> <span> <img src={WeatherData.icon} alt={WeatherData.description}/> </span><span className="temperature">{Math.round(WeatherData.temperature)}</span><span className="unit">ºC </span> </li>
+      <li className="dateFormat"><FormatDate date={WeatherData.date}/></li>
+      <li className="text-capitalize">Description: {WeatherData.description}</li>
+      <li></li>
+      <li>  <span>Humidity: {WeatherData.humidity}%</span> <span>Speed: {WeatherData.speed}km/h</span></li>
+    </ul>
+  </div>
+    </div>
+      {dailyForecast}
       </div>
     );
   } else {
-    return <div> <div className="mb-5">{form} <ul className="results">
-    <li className="city"> Paris <br /><span> 25ºC</span></li>
-    <li></li>
-    <li> <span>Humidity: 85%</span> <span>Speed: 1.65km/h</span></li>
-  </ul></div>{dailyForecast}</div>;
+    return (<div> <div className="mb-5">{form} {Search()}</div>{dailyForecast}</div>
+    );
   }
 }
 

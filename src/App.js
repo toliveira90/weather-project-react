@@ -7,7 +7,7 @@ export default function App() {
     <div className="App container">
       <div className="card">
         <header className="App-header">
-          <Weather />
+          <Weather/>
         </header>
       </div>
     </div>
