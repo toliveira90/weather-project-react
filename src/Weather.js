@@ -18,8 +18,6 @@ export default function SearchEngine() {
   function handleSubmit(event){
     event.preventDefault()
     Search();
-    
-    
   }
   function SearchCity(event) {
     setCity(event.target.value);
@@ -34,9 +32,9 @@ export default function SearchEngine() {
       description: response.data.weather[0].description,
       humidity:response.data.main.humidity,
       speed:response.data.wind.speed,
-      icon:`https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`});
-    
-    }
+      icon:<WeatherIcons code={response.data.weather[0].icon}/>
+    });
+  }
   let form = (
     <div className="container">
         <form className="row mt-5" onSubmit={handleSubmit}>
@@ -48,7 +46,6 @@ export default function SearchEngine() {
   );
   let dailyForecast =(<div>
     <div className="dayNames"><Dates /></div>
-    <div className="dailyForecast ms-5 ps-3"><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span><span className=""><WeatherIcons icon="CLEAR_DAY" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="RAIN" color="black"/></span><span className=""><WeatherIcons icon="CLOUDY" color="black"/></span> </div>
     <div className="dailyTemperatures"><Temperatures /></div>
     </div>);
   if (WeatherData.ready) {
@@ -57,7 +54,7 @@ export default function SearchEngine() {
       <div className="WeatherForecast">
         <div className="Weather">
     <ul className="results">
-      <li className="city"> {WeatherData.city} <br /> <span> <img src={WeatherData.icon} alt={WeatherData.description}/> </span><span className="temperature">{Math.round(WeatherData.temperature)}</span><span className="unit">ºC </span> </li>
+      <li className="city"> {WeatherData.city} <br /> <span> {WeatherData.icon}</span><span className="ms-2 temperature">{Math.round(WeatherData.temperature)}</span><span className="unit">ºC </span> </li>
       <li className="dateFormat"><FormatDate date={WeatherData.date}/></li>
       <li className="text-capitalize">Description: {WeatherData.description}</li>
       <li></li>
@@ -73,4 +70,3 @@ export default function SearchEngine() {
     );
   }
 }
-

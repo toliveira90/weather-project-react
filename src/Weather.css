@@ -1,10 +1,10 @@
 form {
     text-align: center;
   }
-img{
-  padding-bottom: 5.5%;
-  height: 150px;
-  width: 130px;
+.Weather canvas{
+  opacity: 0.7;
+  height: 50px;
+  width: 50px;
 }
   .Weather{
     margin: 30px auto;
@@ -28,7 +28,7 @@ img{
 
   .temperature{
     font-weight: bold;
-    font-size: 50px;
+    font-size: 60px;
     font-weight: 400;
     line-height: 64px;
     opacity: 0.7;
