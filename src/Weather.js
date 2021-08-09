@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import WeatherIcons from "./WeatherIcons";
-import Dates from "./Dates";
-import Temperatures from "./Temperatures";
 import FormatDate from "./FormatDate";
+import TemperatureUnit from "./TemperatureUnit";
 import 'bootstrap/dist/css/bootstrap.css';
 import "./Weather.css"
 
@@ -44,17 +43,13 @@ export default function SearchEngine() {
         </form>
     </div>
   );
-  let dailyForecast =(<div>
-    <div className="dayNames"><Dates /></div>
-    <div className="dailyTemperatures"><Temperatures /></div>
-    </div>);
   if (WeatherData.ready) {
     return (<div>
       {form}
       <div className="WeatherForecast">
         <div className="Weather">
     <ul className="results">
-      <li className="city"> {WeatherData.city} <br /> <span> {WeatherData.icon}</span><span className="ms-2 temperature">{Math.round(WeatherData.temperature)}</span><span className="unit">ºC </span> </li>
+      <li className="city"> {WeatherData.city} <br /> <span> {WeatherData.icon}</span> <span><TemperatureUnit celcius={Math.round(WeatherData.temperature)}/></span></li>
       <li className="dateFormat"><FormatDate date={WeatherData.date}/></li>
       <li className="text-capitalize">Description: {WeatherData.description}</li>
       <li></li>
@@ -62,11 +57,10 @@ export default function SearchEngine() {
     </ul>
   </div>
     </div>
-      {dailyForecast}
       </div>
     );
   } else {
-    return (<div> <div className="mb-5">{form} {Search()}</div>{dailyForecast}</div>
+    return (<div> <div className="mb-5">{form} {Search()}</div></div>
     );
   }
 }
